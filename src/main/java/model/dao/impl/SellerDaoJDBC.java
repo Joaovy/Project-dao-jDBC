@@ -56,16 +56,8 @@ public class SellerDaoJDBC implements SellerDao {
 
             // testa se veio algum resultado
             if (rs.next()) {
-                Department dep = new Department();
-                dep.setId(rs.getInt("DepartmentId"));
-                dep.setName(rs.getString("DepName"));
-                Seller obj = new Seller();
-                obj.setID(rs.getInt("Id"));
-                obj.setName(rs.getString("Name"));
-                obj.setEmail(rs.getString("Email"));
-                obj.setBaseSalary(rs.getDouble("BaseSalary"));
-                obj.setBirthDate(rs.getDate("BirthDate"));
-                obj.setDepartment(dep);
+                Department dep = instantiateDepartment(rs);
+                Seller obj = instantiateSeller(rs, dep);
 
                 return obj;
             }
@@ -81,6 +73,29 @@ public class SellerDaoJDBC implements SellerDao {
         }
 
 
+    }
+    // neste quesito a exeção não esta sendo tratada e sim propagada
+    private Seller instantiateSeller(ResultSet rs, Department dep) throws SQLException {
+
+        Seller obj = new Seller();
+
+        obj.setID(rs.getInt("Id"));
+        obj.setName(rs.getString("Name"));
+        obj.setEmail(rs.getString("Email"));
+        obj.setBaseSalary(rs.getDouble("BaseSalary"));
+        obj.setBirthDate(rs.getDate("BirthDate"));
+        obj.setDepartment(dep);
+
+        return obj;
+    }
+
+    private Department instantiateDepartment(ResultSet rs) throws SQLException {
+
+        Department dep = new Department();
+        dep.setId(rs.getInt("DepartmentId"));
+        dep.setName(rs.getString("DepName"));
+
+        return dep;
     }
 
     @Override
