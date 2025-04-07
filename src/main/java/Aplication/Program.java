@@ -38,6 +38,11 @@ public class Program {
         System.out.println("Inseted new id = "+ newSeller.getID());
 
 
+        System.out.println("\n --- TEST 5: seller update --- ");
+        seller = sellerDao.findById(1);
+        seller.setName("Matha Waine");
+        sellerDao.update(seller);
+        System.out.println("update completed");
 
 
 
